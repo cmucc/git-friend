@@ -48,7 +48,7 @@ def message_callback(nick, channel, msg):
             send_msg(nick, "Are you sure you set the afs permission right?")
             send_msg(nick, "My user name is git-friend@club.cc.cmu.edu")
             send_msg(nick, "Also remember to give me the full path, ie. /afs/andrew.cmu.edu/...")
-            send_msg(nick, "If your client interprets anything begining with a '/' as a command, try  prefixing it with a space")
+            send_msg(nick, "If your client interprets anything beginning with a '/' as a command, try prefixing it with a space")
     elif (state == 2):
         cd = "cd " + nick + "/repo && "
         os.system(cd + "git pull")

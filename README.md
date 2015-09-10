@@ -1,14 +1,15 @@
 # git-friend
 
 A "helpful" IRC bot to walk you through the basics of git.
+
 Created for git workshops by the Carnegie Mellon University Computer Club.
 
 ## How to launch
 
 To run `git-friend` on club servers:
 
-```
-# Ensure a data directory exists, and enter it
+```bash
+# Ensure a data directory exists
 mkdir -p data
 
 # Ensure git-friend has access to all of its directories

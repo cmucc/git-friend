@@ -14,6 +14,8 @@ hostname = "club.cc.cmu.edu"
 
 # This part is actually specific to git-friend
 import os
+# This part is actually specific to git-friend and important!!
+import subprocess
 
 # 0 means uninitialized, +1 for each state from there
 def get_state(nick):
@@ -25,7 +27,7 @@ def get_state(nick):
     return int(state)
 
 def set_state(state, nick):
-    os.system("mkdir -p \'./" + nick + "\'")
+    subprocess.call(["mkdir","-p",nick])
     f = open("./" + nick + "/state", "w")
     f.write(str(state))
 
@@ -40,7 +42,7 @@ def message_callback(nick, channel, msg):
     elif (state == 1):
         msg = msg.strip()
         print(msg)
-        if (os.path.isdir(msg) and os.system("git clone \'" + msg + "\' " + nick + "/repo/") == 0):
+        if (os.path.isdir(msg) and subprocess.call(["git","clone",msg,nick + "/repo/"]) == 0):
             send_msg(nick, "Thanks! Could you also make an initial commit with a .gitignore?")
             set_state(2, nick)
         else:
@@ -50,15 +52,15 @@ def message_callback(nick, channel, msg):
             send_msg(nick, "Also remember to give me the full path, ie. /afs/andrew.cmu.edu/...")
             send_msg(nick, "If your client interprets anything beginning with a '/' as a command, try prefixing it with a space")
     elif (state == 2):
-        cd = "cd " + nick + "/repo && "
-        os.system(cd + "git pull")
+        d = nick + "/repo"
+        subprocess.call(["git","pull"],cwd=d)
         if os.path.exists(nick + "/repo/.gitignore"):
             send_msg(nick, "Great! I'll push what I have so far.")
-            os.system("cp ../speedy_sort.py " + nick + "/repo/")
+            subprocess.call(["cp","../speedy_sort.py",d])
 
-            os.system(cd + "git add " + "speedy_sort.py")
-            os.system(cd + "git commit -m \"Added SpeedySort. You do the rest.\"")
-            if os.system(cd + "git push") == 0:
+            subprocess.call(["git","add","speedy_sort.py"],cwd=d)
+            subprocess.call(["git","commit","-m","Added SpeedySort. You do the rest."],cwd=d)
+            if subprocess.call(["git","push"],cwd=d) == 0:
                 set_state(3, nick)
             else:
                 send_msg(nick, "Uh... are you sure I have write permissions?")

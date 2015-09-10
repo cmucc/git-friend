@@ -58,8 +58,10 @@ def message_callback(nick, channel, msg):
 
             os.system(cd + "git add " + "speedy_sort.py")
             os.system(cd + "git commit -m \"Added SpeedySort. You do the rest.\"")
-            os.system(cd + "git push")
-            set_state(3, nick)
+            if os.system(cd + "git push") == 0:
+                set_state(3, nick)
+            else:
+                send_msg(nick, "Uh... are you sure I have write permissions?")
         else:
             send_msg(nick, "Uh, I don't see a .gitignore in there?")
 

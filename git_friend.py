@@ -58,6 +58,9 @@ def message_callback(nick, channel, msg):
             send_msg(nick, "Great! I'll push what I have so far.")
             subprocess.call(["cp","../speedy_sort.py",d])
 
+            subprocess.call(["git","config","--local","user.name","git-friend"],cwd=d)
+            subprocess.call(["git","config","--local","user.email","git-friend@club.cc.cmu.edu"],cwd=d)
+
             subprocess.call(["git","add","speedy_sort.py"],cwd=d)
             subprocess.call(["git","commit","-m","Added SpeedySort. You do the rest."],cwd=d)
             if subprocess.call(["git","push"],cwd=d) == 0:

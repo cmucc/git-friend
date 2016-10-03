@@ -18,7 +18,7 @@ find . -type d -exec fs sa {} git-friend write \;
 # Become git-friend and authenticate to the cell.
 # (You will need the password to the git-friend principal.)
 kinit git-friend
-aklog club.cc.cmu.edu
+aklog andrew.cmu.edu
 
 # Enter the data directory
 cd data
